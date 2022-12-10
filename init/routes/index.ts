@@ -20,20 +20,18 @@ router.post('/pullRequests', async (req: Request, res: Response) => {
             body: { TOKEN, OWNER, REPO },
         } = req;
         const pullRequests = await getPullRequests(TOKEN, OWNER, REPO);
-        const prs = pullRequests.map((pullRequest) => {
+        const prs = pullRequests.map(pullRequest => {
             const {
                 id,
                 number,
                 title,
                 user: { login: author },
-                commit_count,
             } = pullRequest;
             return {
                 id,
                 number,
                 title,
                 author,
-                commit_count,
             };
         });
         res.status(200).json({ status: 'ok' });
