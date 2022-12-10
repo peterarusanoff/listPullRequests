@@ -2,13 +2,13 @@ import axios, { AxiosError } from 'axios';
 import logger from '../../logger';
 import { PullRequests } from '../../interfaces/pullRequest';
 
-const getPullRequests = async (TOKEN: string, OWNER: string, REPO: string): Promise<PullRequests[]> => {
+const getPullRequests = async (TOKEN: string | undefined, OWNER: string, REPO: string): Promise<PullRequests[]> => {
     try {
         const response = await axios({
             method: 'get',
             baseURL: `https://api.github.com/repos/${OWNER}/${REPO}/pulls`,
             headers: {
-                Authorization: `Bearer ${TOKEN}`,
+                // ...(TOKEN ? { Authorization: `Bearer ${TOKEN}` } : null),
                 'X-GitHub-Api-Version': '2022-11-28',
             },
             transformRequest: [

@@ -19,8 +19,8 @@ router.post('/pullRequests', async (req: Request, res: Response) => {
         const {
             body: { TOKEN, OWNER, REPO },
         } = req;
-        const pullRequests = await getPullRequests(TOKEN, OWNER, REPO);
-        const prs = pullRequests.map(pullRequest => {
+        const unfilteredPullRequests = await getPullRequests(TOKEN, OWNER, REPO);
+        const pullRequests = unfilteredPullRequests.map(pullRequest => {
             const {
                 id,
                 number,
@@ -34,7 +34,7 @@ router.post('/pullRequests', async (req: Request, res: Response) => {
                 author,
             };
         });
-        res.status(200).json({ status: 'ok' });
+        res.status(200).json(pullRequests);
     } catch (error) {
         logger.error(error);
         res.status(500).json({ message: error });
