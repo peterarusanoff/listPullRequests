@@ -1,5 +1,6 @@
+/* eslint-disable no-restricted-syntax */
 import { Request, Response, Router } from 'express';
-import { getPullRequests } from './github/client';
+import { getPullRequests, getCommitsAndAuthor } from './github/client';
 import logger from '../logger';
 
 const router = Router();
@@ -20,20 +21,44 @@ router.post('/pullRequests', async (req: Request, res: Response) => {
             body: { TOKEN, OWNER, REPO },
         } = req;
         const unfilteredPullRequests = await getPullRequests(TOKEN, OWNER, REPO);
-        const pullRequests = unfilteredPullRequests.map(pullRequest => {
+        const pullRequests = [];
+        for await (const pullRequest of unfilteredPullRequests) {
             const {
                 id,
                 number,
                 title,
-                user: { login: author },
+                head: {
+                    ref,
+                    repo: {
+                        fork,
+                        owner: { login },
+                    },
+                },
             } = pullRequest;
-            return {
-                id,
-                number,
-                title,
-                author,
-            };
-        });
+
+            try {
+                const commits = await getCommitsAndAuthor(TOKEN, fork ? login : OWNER, REPO, ref);
+                const {
+                    commit: {
+                        author: { name },
+                    },
+                    files,
+                } = commits;
+                pullRequests.push({
+                    id,
+                    number,
+                    title,
+                    author: name,
+                    commit_count: files.length,
+                });
+            } catch (error) {
+                pullRequests.push({
+                    id,
+                    number,
+                    title,
+                });
+            }
+        }
         res.status(200).json(pullRequests);
     } catch (error) {
         logger.error(error);

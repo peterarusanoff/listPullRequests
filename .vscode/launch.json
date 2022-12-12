@@ -19,7 +19,7 @@
                 "${workspaceFolder}/**",
                 "!**/node_modules/**"
             ],
-            "args": [ "${workspaceFolder}/app.ts"],
+            "args": [ "${workspaceFolder}/init/app.ts"],
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
