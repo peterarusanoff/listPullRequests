@@ -27,17 +27,11 @@ router.post('/pullRequests', async (req: Request, res: Response) => {
                 id,
                 number,
                 title,
-                head: {
-                    ref,
-                    repo: {
-                        fork,
-                        owner: { login },
-                    },
-                },
+                head: { ref, repo },
             } = pullRequest;
 
             try {
-                const commits = await getCommitsAndAuthor(TOKEN, fork ? login : OWNER, REPO, ref);
+                const commits = await getCommitsAndAuthor(TOKEN, repo?.fork ? repo?.owner?.login : OWNER, REPO, ref);
                 const {
                     commit: {
                         author: { name },
