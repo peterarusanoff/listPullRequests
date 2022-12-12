@@ -56,7 +56,7 @@ router.post('/pullRequests', async (req: Request, res: Response) => {
         res.status(200).json(pullRequests);
     } catch (error) {
         logger.error(error);
-        res.status(500).json({ message: error });
+        res.status(500).json({ error });
     }
 });
 

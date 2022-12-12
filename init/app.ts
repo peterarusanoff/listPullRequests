@@ -14,7 +14,6 @@ const port = process.env.PORT || 3000;
 const app = express();
 const server = httpServer.createServer(app);
 
-// view engine setup
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,7 +21,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', api);
-// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response) => {
@@ -31,7 +29,6 @@ app.use((req: Request, res: Response) => {
 
 const onListening = async () => {
     try {
-        // await db.sequelize.sync({ alter: true });
         const addr = server.address();
         console.log(`Express server:${JSON.stringify(addr, null, 4)} Listening on: ${port}`);
     } catch (error) {
