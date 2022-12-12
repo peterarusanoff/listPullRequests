@@ -1,0 +1,9 @@
+{
+	"cSpell.words": [
+        "upsert"
+    ],
+	"editor.tabSize": 4,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+    },
+}
