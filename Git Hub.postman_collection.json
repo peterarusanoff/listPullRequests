@@ -1,0 +1,37 @@
+{
+	"info": {
+		"_postman_id": "12577b77-a611-4825-9044-7d1a384bed62",
+		"name": "Git Hub",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19988069"
+	},
+	"item": [
+		{
+			"name": "Get all Pull requests",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"OWNER\": \"skylines-project\",\n    \"REPO\": \"skylines\"\n    //\"TOKEN\": \"OPTIONAL YOUR GIT HUB TOKEN\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/pullRequests",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"pullRequests"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
